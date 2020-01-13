@@ -4,6 +4,7 @@ import sys
 from IPython.display import display, Markdown
 
 def pprint(query):
-	display(Markdown(f'''```mysql \n {query}```'''))
-	
-	return
+    """Pretty print a SQL query in an interactive python environment. """
+    display(Markdown(f'''```mysql \n {query}```'''))
+
+    return
