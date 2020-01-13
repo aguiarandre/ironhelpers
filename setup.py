@@ -10,11 +10,11 @@ setup(
         "Topic :: Software Development :: Libraries :: Python Modules"
     ],
     description="IronHack library for Python",
-    install_requires=["Flask>=1.0", "SQLAlchemy", "sqlparse", "termcolor"],
+    install_requires=["termcolor"],
     keywords="IronHack",
     name="ironhack",
     package_dir={"": "src"},
     packages=["ironhelpers"],
-    url="https://github.com/cs50/python-cs50",
+    url="https://github.com/aguiarandre/ironhelpers",
     version="0.0.1"
 )
