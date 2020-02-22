@@ -61,7 +61,7 @@ def survival(data, group_field, time_field, event_field):
 
 def cramers_v(x, y):
     '''
-    Returns the Cramér's V correlation matrix between x and y.
+    Returns the Cramér's V correlation between x and y.
     '''
     confusion_matrix = pd.crosstab(x,y)
     chi2 = ss.chi2_contingency(confusion_matrix)[0]
