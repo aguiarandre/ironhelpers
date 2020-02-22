@@ -1,5 +1,9 @@
 import os
 import pandas as pd
+import numpy as np
+import scipy.stats as ss
+import matplotlib.pyplot as plt
+import seaborn as sns
 import sys
 
 from IPython.display import display, Markdown
@@ -54,3 +58,35 @@ def survival(data, group_field, time_field, event_field):
 
     survival = pd.concat(results, axis=1)
     return survival
+
+def cramers_v(x, y):
+    '''
+    Returns the Cramér's V correlation matrix between x and y.
+    '''
+    confusion_matrix = pd.crosstab(x,y)
+    chi2 = ss.chi2_contingency(confusion_matrix)[0]
+    n = confusion_matrix.sum().sum()
+    phi2 = chi2 / n
+    r, k = confusion_matrix.shape
+    phi2corr = max(0, phi2 - ((k - 1) * (r - 1)) / (n - 1))
+    rcorr = r - ((r - 1) ** 2) / (n - 1)
+    kcorr = k - ((k - 1) ** 2)/(n - 1)
+    return np.sqrt(phi2corr / min((kcorr - 1), (rcorr - 1)))
+  
+def ltri_corr_heatmap(figsize, corr_df):
+    '''
+    Plots a lower triangular heatmap of corr_df.
+    '''
+    fig, ax = plt.subplots(figsize=figsize)
+    mask = np.zeros_like(corr_df, dtype=np.bool)
+    mask[np.triu_indices_from(mask)] = True
+    sns.heatmap(corr_df,
+                mask=mask,
+                cmap='Blues',
+                square=True,
+                cbar_kws={"shrink": .8},
+                linewidths=0.1,
+                annot=True,
+                fmt='.2f',
+                ax=ax)
+    ax.set_ylim(len(corr_df), 0, 0);
